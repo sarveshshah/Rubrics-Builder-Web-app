@@ -38,14 +38,13 @@ def export_data(to_be_exported):
 
 st.write("""
 # Rubrics Builder for CMA
-*with love from Sarvesh* 
 """)
 
 # FAQ Code
-expander = st.beta_expander("Click on + for FAQ")
-expander.write("""
-A simple to use Rubrics Builder. Select a trait of your choice and add it to the list.
-""")
+# expander = st.beta_expander("Click on + for FAQ")
+# expander.write("""
+# A simple to use Rubrics Builder. Select a trait of your choice and add it to the list.
+# """)
 
 # Read the existing Traits, can be further changed
 df = pd.read_excel("Rubric Builder 2.5.xlsx", sheet_name="RAW Data")
