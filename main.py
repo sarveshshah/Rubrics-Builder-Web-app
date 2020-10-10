@@ -101,5 +101,3 @@ with third_column:
 
 if export:
     export_data(get_data())
-            
-
