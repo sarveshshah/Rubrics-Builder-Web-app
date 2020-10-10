@@ -38,6 +38,7 @@ def export_data(to_be_exported):
 
 st.write("""
 # Rubrics Builder for CMA
+*with love from Sarvesh* 
 """)
 
 # FAQ Code
