@@ -25,9 +25,8 @@ def export_data(to_be_exported):
     for data in to_be_exported:
         trait = data['Trait']
         point = data['Max Points']
-
+        
         temp = df.loc[df['Trait']==trait,:]
-
         with np.errstate(invalid='ignore'):
             for column, multiplier in rubric_dict.items():
                 temp.loc[:,column] = round(max_points*multiplier,2)                
