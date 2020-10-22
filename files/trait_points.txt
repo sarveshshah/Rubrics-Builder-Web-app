@@ -1,0 +1,38 @@
+{
+    "rubric_dict_grad" : {
+    "Exemplary": 1,
+    "Proficient": 0.93,
+    "Developing": 0.86,
+    "Limited": 0.79
+},
+
+"rubric_dict_ugrad" : {
+    "Exemplary": 1,
+    "Proficient": 0.89,
+    "Developing": 0.79,
+    "Limited": 0.69
+},
+
+"rubric_dict_grad_range" : {
+    "Exemplary High": 1,
+    "Exemplary Low":0.94,
+    "Proficient High": 0.93,
+    "Proficient Low": 0.87,
+    "Developing High": 0.86,
+    "Developing Low": 0.8,
+    "Limited High": 0.79,
+    "Limited Low": 0
+},
+
+"rubric_dict_ugrad_range" : {
+    "Exemplary High": 1,
+    "Exemplary Low":0.9,
+    "Proficient High": 0.89,
+    "Proficient Low": 0.8,
+    "Developing High": 0.79,
+    "Developing Low": 0.7,
+    "Limited High": 0.69,
+    "Limited Low": 0
+
+}
+}

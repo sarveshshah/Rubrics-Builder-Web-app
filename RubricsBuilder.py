@@ -1,41 +1,102 @@
 import pandas as pd
 import numpy as np
 import streamlit as st 
+import json
+
+# TODO: Figure out a way to scale logo
+# from PIL import Image
+# im = Image.open('Fox Logo.jpg')
+# print(im.width,im.height)
+# image = im.resize(size=(int(im.width/7),int(im.height/7)))
 
 # Create an exportable Rubric List
 @st.cache(allow_output_mutation=True)
 def get_data():
     return []
 
+def read_traits():
+    s = open(r'files/trait_points.txt', 'r').read()
+    trait_points = json.loads(s)
+    print(trait_points.keys())
+
+    rubric_dict_grad = trait_points['rubric_dict_grad']
+    rubric_dict_ugrad = trait_points['rubric_dict_ugrad']
+    rubric_dict_grad_range = trait_points['rubric_dict_grad_range']
+    rubric_dict_ugrad_range = trait_points['rubric_dict_ugrad_range']
+
+    return rubric_dict_grad, rubric_dict_ugrad, rubric_dict_grad_range, rubric_dict_ugrad_range
+
 def get_trait():
+    
+    # Graduate
+    grad_level = left_column.selectbox("Enter Grad Level", options = ['Graduate','Under Graduate'])
+
     # Trait
-    selected_trait = left_column.selectbox(
-        'Select a Trait',
-        list_of_traits)
+    selected_trait = first_column.selectbox('Select a Trait', list_of_traits)
 
     # Max points out of 10
-    max_points = right_column.selectbox('Select Maximum Point Value',
-    np.arange(10,1,-1)
-    )
+    max_points = last_column.selectbox('Select Maximum Point Value', np.arange(100,1,-1))
 
-    return selected_trait, max_points
+    # Range option
+    range_opt = right_column.selectbox("Range", options = ['Yes','No'])
 
-def export_data(to_be_exported):
+    return selected_trait, max_points, grad_level, range_opt
+
+def export_data(to_be_exported, grad_level, range_opt):
     export = []
     for data in to_be_exported:
         trait = data['Trait']
         point = data['Max Points']
         
         temp = df.loc[df['Trait']==trait,:]
-        with np.errstate(invalid='ignore'):
-            for column, multiplier in rubric_dict.items():
-                temp.loc[:,column] = round(max_points*multiplier,2)                
-        export.append(temp)
+
+        if grad_level == 'Graduate' and range_opt == 'Yes':
+            with np.errstate(invalid='ignore'):
+                for column, multiplier in rubric_dict_grad_range.items():
+                    temp.loc[:,column] = round(point*multiplier,2)                
+            export.append(temp)
+
+        if grad_level == 'Under Graduate' and range_opt == 'Yes':
+            with np.errstate(invalid='ignore'):
+                for column, multiplier in rubric_dict_ugrad_range.items():
+                    temp.loc[:,column] = round(point*multiplier,2)                
+            export.append(temp)
+
+        if grad_level == 'Graduate' and range_opt == 'No':
+            with np.errstate(invalid='ignore'):
+                for column, multiplier in rubric_dict_grad.items():
+                    temp.loc[:,column] = round(point*multiplier,2)                
+            export.append(temp)
+
+        if grad_level == 'Under Graduate' and range_opt == 'No':
+            with np.errstate(invalid='ignore'):
+                for column, multiplier in rubric_dict_ugrad.items():
+                    temp.loc[:,column] = round(point*multiplier,2)                
+            export.append(temp)
+
     rubrics = pd.concat(export)
 
     st.table(rubrics)
     rubrics.to_excel('Rubrics.xlsx',sheet_name='Rubrics',index=False, header=True)
 
+def footer():
+    st.markdown("Built by")
+    left, right = st.beta_columns(2)
+
+    left.markdown("""
+                Matthew Kunkle  
+                Fox School of Business  
+                PhD Fall 20
+            """)
+
+    right.markdown("""
+                Sarvesh Shah  
+                Fox School of Business  
+                MSBA Fall 19
+            """)
+
+
+# st.image(im, use_column_width=True)
 st.write("""
 # Rubrics Builder for CMA
 """)
@@ -47,31 +108,38 @@ st.write("""
 # """)
 
 # Read the existing Traits, can be further changed
-df = pd.read_excel("Rubric Builder 2.5.xlsx", sheet_name="RAW Data")
+df = pd.read_excel(r"files/Rubric Builder 2.5.xlsx", sheet_name="RAW Data")
 list_of_traits = df['Trait'].unique()
 
 # Control Panel 
 # Setting up two columns
-left_column, right_column = st.beta_columns(2)
+left_column, first_column, last_column, right_column = st.beta_columns(4)
 
-selected_trait, max_points = get_trait()
+selected_trait, max_points, grad_level, range_opt = get_trait()
 rubrics = df.loc[df['Trait']==selected_trait]
 
-# Rubric List dict, to be replaced with a json/config file
-rubric_dict = {
-    "Exemplary": 1,
-    "Proficient": 0.93,
-    "Developing": 0.86,
-    "Limited": 0.79
-}
+rubric_dict_grad, rubric_dict_ugrad, rubric_dict_grad_range, rubric_dict_ugrad_range = read_traits()
 
 # Add new columns
 with np.errstate(invalid='ignore'):
-    for column, multiplier in rubric_dict.items():
-        rubrics.loc[:,column] = round(max_points*multiplier,2)
+    if grad_level == 'Graduate' and range_opt == 'Yes':
+        for column, multiplier in rubric_dict_grad_range.items():
+            rubrics.loc[:,column] = round(max_points*multiplier,2)
+
+    if grad_level == 'Graduate' and range_opt == 'No':
+        for column, multiplier in rubric_dict_grad.items():
+            rubrics.loc[:,column] = round(max_points*multiplier,2)    
+
+    if grad_level == 'Under Graduate' and range_opt == 'Yes':
+        for column, multiplier in rubric_dict_ugrad_range.items():
+            rubrics.loc[:,column] = round(max_points*multiplier,2)
+
+    if grad_level == 'Under Graduate' and range_opt == 'No':
+        for column, multiplier in rubric_dict_ugrad.items():
+            rubrics.loc[:,column] = round(max_points*multiplier,2)
 
 # Show the DataFrame
-"""### Trait Description"""
+st.markdown("""## Trait Description""")
 
 st.dataframe(rubrics.iloc[:,1:5].T)
 st.dataframe(rubrics.iloc[:,5:].T)
@@ -99,4 +167,6 @@ with third_column:
     export = st.button("Export Rubrics")
 
 if export:
-    export_data(get_data())
+    export_data(get_data(), grad_level, range_opt)
+
+footer()
