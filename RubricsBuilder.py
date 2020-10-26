@@ -108,7 +108,7 @@ st.write("""
 # """)
 
 # Read the existing Traits, can be further changed
-df = pd.read_csv(r"files/traits.csv")
+df = pd.read_csv(r"files/traits.csv",sep=",", encoding='cp1252')
 list_of_traits = df['Trait'].unique()
 
 # Control Panel 
