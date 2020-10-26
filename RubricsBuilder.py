@@ -109,7 +109,11 @@ def footer():
 
 # st.image(im, use_column_width=True)
 st.write("""
-# Rubrics Builder for CMA
+# Rubrics Builder 
+by [Curriculum Management & Assessment](<https://www.fox.temple.edu/analytics-and-accreditation/curriculum-management-assessment/>)  
+Temple University  
+
+
 """)
 
 # FAQ Code  
