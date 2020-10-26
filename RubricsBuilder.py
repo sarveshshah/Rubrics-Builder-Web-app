@@ -115,6 +115,9 @@ st.write("""
 # FAQ Code  
 expander = st.beta_expander("How to use")
 expander.write("""
+
+In order to fully experience this app, navigate to hamburger menu in top right -> Settings -> Check 'Show app in wide mode'
+
 ### **Selection Guide**  
     1. Select the graduate/undergradute level  
     2. Select a trait of your choice      
