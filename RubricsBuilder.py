@@ -13,7 +13,7 @@ import base64
 def header():
     st.write("""
     # Rubrics Builder 
-    by [Curriculum Management & Assessment](https://www.fox.temple.edu/analytics-and-accreditation/curriculum-management-assessment/)  
+    by [Curriculum Management & Assessment](https://www.fox.temple.edu/analytics-and-accreditation/curriculum-management-assessment/),
     Fox School of Business, Temple University
 """)
 
