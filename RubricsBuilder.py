@@ -10,6 +10,39 @@ import base64
 # print(im.width,im.height)
 # image = im.resize(size=(int(im.width/7),int(im.height/7)))
 
+def header():
+    st.write("""
+    # Rubrics Builder 
+    by [Curriculum Management & Assessment](https://www.fox.temple.edu/analytics-and-accreditation/curriculum-management-assessment/)  
+    Fox School of Business, Temple University
+""")
+
+    # FAQ Code  
+    expander = st.beta_expander("How to use")
+    expander.write("""
+
+    In order to fully experience this app, navigate to hamburger menu in top right -> Settings -> Check 'Show app in wide mode'
+
+    ### **Selection Guide**  
+        1. Select the graduate/undergradute level  
+        2. Select a trait of your choice      
+        3. Select Maximum Points  
+        4. Select if you want rubric point ranges (default = Yes)   
+
+    ### **Other Controls**  
+        1. The trait descriptions and points will be visible in the tables below  
+        2. If you're satisfied with the selection, add it to the list by clicking the option below  
+        3. You can always clear the list if you want to start from scratch  
+        4. Once you're happy with the selection, click the Export button  
+        5. Click the link to download your rubrics  
+
+    **Make sure to clear the list before using it, to clear out any previous selection**
+
+    Feel free to share any feedback at ``sarvesh.shah@temple.edu``
+
+""")
+
+
 # Create an exportable Rubric List
 @st.cache(allow_output_mutation=True)
 def get_data():
@@ -87,13 +120,13 @@ def footer():
     left, right = st.beta_columns(2)
 
     left.markdown("""
-                > Matthew Kunkle  
+                > [Matthew Kunkle](https://www.fox.temple.edu/about-fox/directory/matthew-kunkle/)  
                 > Fox School of Business  
                 > PhD Fall 20
             """)
 
     right.markdown("""
-                > Sarvesh Shah  
+                > [Sarvesh Shah](https://www.sarvesh-shah.com/)  
                 > Fox School of Business  
                 > MSBA Fall 19
             """)
@@ -108,38 +141,9 @@ def footer():
 
 
 # st.image(im, use_column_width=True)
-st.write("""
-# Rubrics Builder 
-by [Curriculum Management & Assessment](<https://www.fox.temple.edu/analytics-and-accreditation/curriculum-management-assessment/>)  
-Temple University  
 
 
-""")
-
-# FAQ Code  
-expander = st.beta_expander("How to use")
-expander.write("""
-
-In order to fully experience this app, navigate to hamburger menu in top right -> Settings -> Check 'Show app in wide mode'
-
-### **Selection Guide**  
-    1. Select the graduate/undergradute level  
-    2. Select a trait of your choice      
-    3. Select Maximum Points  
-    4. Select if you want rubric point ranges (default = Yes)   
-
-### **Other Controls**  
-    1. The trait descriptions and points will be visible in the tables below  
-    2. If you're satisfied with the selection, add it to the list by clicking the option below  
-    3. You can always clear the list if you want to start from scratch  
-    4. Once you're happy with the selection, click the Export button  
-    5. Click the link to download your rubrics  
-
-**Make sure to clear the list before using it, to clear out any previous selection**
-
-Feel free to share any feedback at ``sarvesh.shah@temple.edu``
-
-""")
+header()
 
 # Read the existing Traits, can be further changed
 df = pd.read_csv(r"files/traits.csv",sep=",", encoding='cp1252')
