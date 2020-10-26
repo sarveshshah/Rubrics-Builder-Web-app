@@ -18,7 +18,6 @@ def get_data():
 def read_traits():
     s = open(r'files/trait_points.txt', 'r').read()
     trait_points = json.loads(s)
-    print(trait_points.keys())
 
     rubric_dict_grad = trait_points['rubric_dict_grad']
     rubric_dict_ugrad = trait_points['rubric_dict_ugrad']
@@ -30,7 +29,7 @@ def read_traits():
 def get_trait():
     
     # Graduate
-    grad_level = left_column.selectbox("Enter Grad Level", options = ['Graduate','Under Graduate'])
+    grad_level = left_column.selectbox("Enter Grad Level", options = ['Graduate','Undergraduate'])
 
     # Trait
     selected_trait = first_column.selectbox('Select a Trait', list_of_traits)
@@ -105,11 +104,27 @@ st.write("""
 # Rubrics Builder for CMA
 """)
 
-# FAQ Code
-# expander = st.beta_expander("Click on + for FAQ")
-# expander.write("""
-# A simple to use Rubrics Builder. Select a trait of your choice and add it to the list.
-# """)
+# FAQ Code  
+expander = st.beta_expander("How to use")
+expander.write("""
+### **Selection Guide**  
+    1. Select the graduate/undergradute level  
+    2. Select a trait of your choice      
+    3. Select Maximum Points  
+    4. Select if you want rubric point ranges (default = Yes)   
+
+### **Other Controls**  
+    1. The trait descriptions and points will be visible in the tables below  
+    2. If you're satisfied with the selection, add it to the list by clicking the option below  
+    3. You can always clear the list if you want to start from scratch  
+    4. Once you're happy with the selection, click the Export button  
+    5. Click the link to download your rubrics  
+
+**Make sure to clear the list before using it, to clear out any previous selection**
+
+Feel free to share any feedback at ``sarvesh.shah@temple.edu``
+
+""")
 
 # Read the existing Traits, can be further changed
 df = pd.read_csv(r"files/traits.csv",sep=",", encoding='cp1252')
