@@ -108,7 +108,7 @@ st.write("""
 # """)
 
 # Read the existing Traits, can be further changed
-df = pd.read_excel(r"files/Rubric Builder 2.5.xlsx", sheet_name="RAW Data")
+df = pd.read_csv(r"files/traits.csv")
 list_of_traits = df['Trait'].unique()
 
 # Control Panel 
