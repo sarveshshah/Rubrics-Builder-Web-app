@@ -83,20 +83,28 @@ def export_data(to_be_exported, grad_level, range_opt):
     st.markdown(href, unsafe_allow_html = True)
 
 def footer():
-    st.markdown("Built by")
+    st.markdown("### Built by")
     left, right = st.beta_columns(2)
 
     left.markdown("""
-                Matthew Kunkle  
-                Fox School of Business  
-                PhD Fall 20
+                > Matthew Kunkle  
+                > Fox School of Business  
+                > PhD Fall 20
             """)
 
     right.markdown("""
-                Sarvesh Shah  
-                Fox School of Business  
-                MSBA Fall 19
+                > Sarvesh Shah  
+                > Fox School of Business  
+                > MSBA Fall 19
             """)
+
+    st.markdown("""
+        **Note**:  
+        This app is purely for demonstration purposes.  
+        The app is intellectual property of Sarvesh Shah, the traits, rubrics available in the app are intellectual property of Matthew Kunkle.  
+        Feel free to contribute to this project on GitHub.
+    
+    """)
 
 
 # st.image(im, use_column_width=True)
