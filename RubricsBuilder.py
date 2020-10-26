@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import streamlit as st 
 import json
+import base64
 
 # TODO: Figure out a way to scale logo
 # from PIL import Image
@@ -76,8 +77,11 @@ def export_data(to_be_exported, grad_level, range_opt):
 
     rubrics = pd.concat(export)
 
-    st.table(rubrics)
-    rubrics.to_excel('Rubrics.xlsx',sheet_name='Rubrics',index=False, header=True)
+    # st.table(rubrics)
+    csv = rubrics.to_csv(index=False, header=True)
+    b64 = base64.b64encode(csv.encode()).decode() 
+    href = f'<a href="data:file/csv;base64,{b64}" download="Rubrics.csv">Download csv file</a>'
+    st.markdown(href, unsafe_allow_html = True)
 
 def footer():
     st.markdown("Built by")
