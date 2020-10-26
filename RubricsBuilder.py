@@ -157,9 +157,7 @@ with first_column:
         "Max Points": max_points})
         st.text('Added to the list')
     
-    show = st.checkbox("Show List")
-    if show:
-        st.table(pd.DataFrame(get_data()))
+    st.table(pd.DataFrame(get_data()))
 
 with second_column:
     clear = st.button("Clear List")
