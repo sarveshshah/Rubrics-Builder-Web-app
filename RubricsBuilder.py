@@ -89,7 +89,7 @@ def export_data(to_be_exported, grad_level, range_opt):
                     temp.loc[:,column] = round(point*multiplier,2)                
             export.append(temp)
 
-        if grad_level == 'Under Graduate' and range_opt == 'Yes':
+        if grad_level == 'Undergraduate' and range_opt == 'Yes':
             with np.errstate(invalid='ignore'):
                 for column, multiplier in rubric_dict_ugrad_range.items():
                     temp.loc[:,column] = round(point*multiplier,2)                
@@ -101,7 +101,7 @@ def export_data(to_be_exported, grad_level, range_opt):
                     temp.loc[:,column] = round(point*multiplier,2)                
             export.append(temp)
 
-        if grad_level == 'Under Graduate' and range_opt == 'No':
+        if grad_level == 'Undergraduate' and range_opt == 'No':
             with np.errstate(invalid='ignore'):
                 for column, multiplier in rubric_dict_ugrad.items():
                     temp.loc[:,column] = round(point*multiplier,2)                
@@ -168,11 +168,11 @@ with np.errstate(invalid='ignore'):
         for column, multiplier in rubric_dict_grad.items():
             rubrics.loc[:,column] = round(max_points*multiplier,2)    
 
-    if grad_level == 'Under Graduate' and range_opt == 'Yes':
+    if grad_level == 'Undergraduate' and range_opt == 'Yes':
         for column, multiplier in rubric_dict_ugrad_range.items():
             rubrics.loc[:,column] = round(max_points*multiplier,2)
 
-    if grad_level == 'Under Graduate' and range_opt == 'No':
+    if grad_level == 'Undergraduate' and range_opt == 'No':
         for column, multiplier in rubric_dict_ugrad.items():
             rubrics.loc[:,column] = round(max_points*multiplier,2)
 
