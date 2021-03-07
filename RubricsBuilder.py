@@ -187,7 +187,7 @@ with np.errstate(invalid='ignore'):
 # Show the DataFrame
 st.markdown("""## Trait Description""")
 
-st.table((rubrics.set_index('Trait')).iloc[:,1:5])
+st.table((rubrics.set_index('Trait')).iloc[:,0:5])
 st.dataframe(rubrics.iloc[:,5:].T)
 
 first_column, second_column, third_column = st.beta_columns(3)
