@@ -4,18 +4,27 @@ import streamlit as st
 import json
 import base64
 
-# TODO: Figure out a way to scale logo
-# from PIL import Image
-# im = Image.open('Fox Logo.jpg')
-# print(im.width,im.height)
-# image = im.resize(size=(int(im.width/7),int(im.height/7)))
+from PIL import Image
+im = Image.open('files/Fox Logo.jpg')
+print(im.width,im.height)
 
 def header():
-    st.write("""
-    # Rubrics Builder 
-    by [Curriculum Management & Assessment](https://www.fox.temple.edu/analytics-and-accreditation/curriculum-management-assessment/),
-    Fox School of Business, Temple University
-""")
+    left_column_head, center_column_head, right_column_head = st.beta_columns(3)
+
+    with left_column_head:
+        st.image(im, use_column_width=True)
+
+    with center_column_head:
+        st.write()
+
+    with right_column_head:
+        st.write()
+        
+    st.markdown("""
+        # Rubrics Builder 
+        by [Curriculum Management & Assessment](https://www.fox.temple.edu/analytics-and-accreditation/curriculum-management-assessment/),
+        Fox School of Business, Temple University
+    """)
 
     # FAQ Code  
     expander = st.beta_expander("How to use")
@@ -68,7 +77,7 @@ def get_trait():
     selected_trait = first_column.selectbox('Select a Trait', list_of_traits)
 
     # Max points out of 10
-    max_points = last_column.selectbox('Select Maximum Point Value', np.arange(100,1,-1))
+    max_points = last_column.selectbox('Select Maximum Points', np.arange(100,1,-1))
 
     # Range option
     range_opt = right_column.selectbox("Range", options = ['Yes','No'])
@@ -120,27 +129,26 @@ def footer():
     left, right = st.beta_columns(2)
 
     left.markdown("""
-                > [Matthew Kunkle](https://www.fox.temple.edu/about-fox/directory/matthew-kunkle/)  
+                > [Matthew Kunkle, PhD](https://www.fox.temple.edu/about-fox/directory/matthew-kunkle/)  
                 > Fox School of Business  
-                > PhD Fall 20
+                > Senior Associate Director  
+                > Analytics and Accreditation
             """)
 
     right.markdown("""
-                > [Sarvesh Shah](https://www.sarvesh-shah.com/)  
+                > [Sarvesh Shah, MSBA](https://www.sarvesh-shah.com/)  
                 > Fox School of Business  
-                > MSBA Fall 19
+                > Data Scientist  
+                > SEPTA
             """)
 
     st.markdown("""
         **Note**:  
-        This app is purely for demonstration purposes.  
-        The app is intellectual property of Sarvesh Shah, the traits, rubrics available in the app are intellectual property of Matthew Kunkle.  
+        This app is purely for demonstration purposes only.  
+        The traits, rubrics available in the app are intellectual property of Fox School of Business, Temple University.  
         Feel free to contribute to this project on GitHub.
     
     """)
-
-
-# st.image(im, use_column_width=True)
 
 
 header()
@@ -179,7 +187,7 @@ with np.errstate(invalid='ignore'):
 # Show the DataFrame
 st.markdown("""## Trait Description""")
 
-st.table(rubrics.iloc[:,1:5])
+st.table((rubrics.set_index('Trait')).iloc[:,1:5])
 st.dataframe(rubrics.iloc[:,5:].T)
 
 first_column, second_column, third_column = st.beta_columns(3)
@@ -190,8 +198,10 @@ with first_column:
         get_data().append({"Trait":selected_trait,
         "Max Points": max_points})
         st.text('Added to the list')
-    
-    st.table(pd.DataFrame(get_data()))
+    try:
+        st.table(pd.DataFrame(get_data()).set_index('Trait'))
+    except:
+        pass
 
 with second_column:
     clear = st.button("Clear List")
